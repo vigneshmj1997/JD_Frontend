@@ -44,8 +44,57 @@ const ChatPage = () => {
         required_documents: [
             "Resume", "Cover Letter", "Recommendation Letter", "Portfolio", "Transcript", "CV","Curriculum Vitae"
         ],
-        optional_education_qualifications: ["BSc Computer Science", "BSc Physics"],
-        required_education_qualifications: ["BSc Computer Science", "BSc Physics"],
+        optional_education_qualifications: [
+            "BSc Computer Science",
+            "BSc Physics",
+            "BSc Information Technology",
+            "BSc Mathematics",
+            "BSc Software Engineering",
+            "BSc Data Science",
+            "BSc Artificial Intelligence",
+            "BSc Cybersecurity",
+            "BSc Computer Engineering",
+            "BSc Electrical Engineering",
+            "BSc Applied Mathematics",
+            "BSc Statistics",
+            "BSc Information Systems",
+            "BEng Computer Engineering",
+            "BEng Electrical and Electronic Engineering",
+            "BEng Software Engineering",
+            "BSc Network Engineering",
+            "BSc Robotics",
+            "BSc Electronics",
+            "BSc Computational Science",
+            "BSc Bioinformatics",
+            "BSc Computational Physics",
+            "BSc Game Development",
+            "BSc Cloud Computing",
+            "BSc Web Development",
+            "BSc Mobile Application Development",
+            "BSc IT Management",
+            "BSc Digital Forensics",
+            "BSc DevOps Engineering",
+            "BSc Machine Learning",
+            "BSc Computational Biology",
+            "BSc Human-Computer Interaction",
+            "BSc Systems Engineering",
+            "BSc Database Management",
+            "BSc Network Security",
+            "BSc Project Management",
+            "BSc Information Security",
+            "BSc Data Analytics",
+            "BSc IT Support",
+            "BSc Geographic Information Systems (GIS)",
+            "BSc Health Informatics"
+        ],
+        required_education_qualifications: [
+            "BSc Computer Science",
+            "BSc Physics",
+            "BSc Information Technology",
+            "BSc Software Engineering",
+            "BSc Mathematics"
+        ]
+        
     };
 
     // Save messages to localStorage whenever they change

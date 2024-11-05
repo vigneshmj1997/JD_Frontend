@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Box, List, ListItem, ListItemText, Typography, IconButton } from '@mui/material';
-import RefreshIcon from '@mui/icons-material/Refresh'; // Import the refresh icon
+import RefreshIcon from '@mui/icons-material/Refresh';
+import SendIcon from '@mui/icons-material/Send';
 
 const ChatInput = ({ onSendMessage, suggestions = [] }) => {
     const [inputValue, setInputValue] = useState('');
@@ -10,11 +11,9 @@ const ChatInput = ({ onSendMessage, suggestions = [] }) => {
         const value = event.target.value;
         setInputValue(value);
 
-        // Split the input by spaces to get the last word
         const words = value.trim().split(/\s+/);
         const lastWord = words[words.length - 1];
 
-        // Trigger suggestions for the last word if it has at least 2 characters
         if (lastWord.length >= 2) {
             const filtered = suggestions
                 .map(group => ({
@@ -27,73 +26,82 @@ const ChatInput = ({ onSendMessage, suggestions = [] }) => {
 
             setFilteredSuggestions(filtered);
         } else {
-            setFilteredSuggestions([]); // Clear suggestions when the last word is less than 2 characters
+            setFilteredSuggestions([]);
         }
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        // If there are suggestions, auto-complete the first one
         if (filteredSuggestions.length > 0) {
             const firstSuggestion = filteredSuggestions[0].suggestions[0];
             if (firstSuggestion) {
                 handleSuggestionClick(firstSuggestion);
             }
         } else if (inputValue.trim()) {
-            // No suggestions: send the message
             onSendMessage(inputValue);
-            setInputValue(''); // Clear input after sending
+            setInputValue('');
         }
 
-        setFilteredSuggestions([]); // Clear suggestions after sending or selection
+        setFilteredSuggestions([]);
     };
 
     const handleSuggestionClick = (suggestion) => {
-        // Split the input value by spaces and replace the last word with the selected suggestion
         const words = inputValue.trim().split(/\s+/);
         words[words.length - 1] = suggestion;
-        const newValue = words.join(' ');
-
-        setInputValue(newValue); // Update the input with the replaced word
-        setFilteredSuggestions([]); // Clear suggestions after selection
+        setInputValue(words.join(' '));
+        setFilteredSuggestions([]);
     };
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
-            event.preventDefault(); // Prevent form submission on Enter
-            handleSubmit(event); // Call handleSubmit for both sending and auto-completing
+            event.preventDefault();
+            handleSubmit(event);
         }
     };
 
     const handleRefreshClick = () => {
-        onSendMessage("refresh"); // Call onSendMessage with "refresh" to restart the chat
-        setInputValue(''); // Clear the input after refresh
+        onSendMessage("restart");
+        setInputValue('');
     };
 
     return (
-        <form onSubmit={handleSubmit} style={{ width: '100%', position: 'relative' }}>
-            <TextField
-                value={inputValue}
-                onChange={handleInputChange}
-                onKeyDown={handleKeyDown} // Handle Enter key
-                fullWidth
-                placeholder="Type your message or click the refresh icon to restart..."
-                variant="outlined"
-                autoComplete="off"
-                style={{ borderRadius: '8px' }} // Rounded corners for the input
-            />
+        <form onSubmit={handleSubmit} style={{ width: '100%', position: 'relative', display: 'flex', alignItems: 'center' ,marginTop: "4px" }}>
+            {/* Refresh Button on the left */}
             <IconButton
                 onClick={handleRefreshClick}
                 style={{
-                    position: 'absolute',
-                    right: '10px',
-                    top: '10px',
-                    color: '#1976d2', // Primary color
+                    color: '#1976d2',
+                    marginRight: '8px'
                 }}
             >
                 <RefreshIcon />
             </IconButton>
+            
+            {/* Input Field */}
+            <TextField
+                value={inputValue}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+                fullWidth
+                placeholder="Type your message..."
+                variant="outlined"
+                autoComplete="off"
+                style={{ borderRadius: '8px', flex: 1 }} 
+            />
+            
+            {/* Send Button on the right */}
+            <IconButton
+                onClick={handleSubmit}
+                type="submit"
+                style={{
+                    color: '#1976d2',
+                    marginLeft: '8px'
+                }}
+            >
+                <SendIcon />
+            </IconButton>
+
             {/* Render filtered suggestions above the input */}
             {filteredSuggestions.length > 0 && (
                 <Box
@@ -103,8 +111,8 @@ const ChatInput = ({ onSendMessage, suggestions = [] }) => {
                     borderRadius="4px"
                     boxShadow={2}
                     style={{
-                        bottom: '100%', // Position the box above the input
-                        marginBottom: '8px', // Add some space between suggestions and input
+                        bottom: '100%',
+                        marginBottom: '8px',
                         width: '100%',
                     }}
                 >
@@ -148,3 +156,4 @@ const ChatInput = ({ onSendMessage, suggestions = [] }) => {
 };
 
 export default ChatInput;
+ 

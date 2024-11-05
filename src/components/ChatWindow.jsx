@@ -1,16 +1,19 @@
 import React, { useEffect, useRef } from 'react';
 import { Box, Typography } from '@mui/material';
-// import Face6Icon from '@mui/icons-material/SmartToy';  // Bot icon
 import PersonIcon from '@mui/icons-material/Person';
 import Face6Icon from '@mui/icons-material/Face6';
 
 const ChatWindow = ({ messages, style }) => {
     const messagesEndRef = useRef(null);
 
-    useEffect(() => {
+    const scrollToBottom = () => {
         if (messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
         }
+    };
+
+    useEffect(() => {
+        scrollToBottom();
     }, [messages]);
 
     const renderMessageText = (text) => {
@@ -41,7 +44,6 @@ const ChatWindow = ({ messages, style }) => {
                     alignItems="flex-start"
                     flexDirection={message.sender === 'user' ? 'row-reverse' : 'row'}
                 >
-                    {/* Display icon based on sender */}
                     {message.sender === 'user' ? (
                         <PersonIcon sx={{ fontSize: 40, color: '#1976d2', ml: 1 }} />
                     ) : (
@@ -49,7 +51,6 @@ const ChatWindow = ({ messages, style }) => {
                     )}
 
                     <Box display="flex" flexDirection="column" maxWidth="80%">
-                        {/* Display timestamp above the message */}
                         <Typography 
                             variant="caption" 
                             color="textSecondary" 
@@ -62,13 +63,13 @@ const ChatWindow = ({ messages, style }) => {
                             variant="body1" 
                             align={message.sender === 'user' ? 'right' : 'left'}
                             style={{
-                                fontSize: '1rem', // Slightly larger font size
+                                fontSize: '1rem',
                                 lineHeight: 1.5,
                                 backgroundColor: message.sender === 'user' ? '#daf4ff' : '#f0f0f0',
                                 borderRadius: '18px',
                                 padding: '10px 16px',
                                 boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                                wordBreak: 'break-word', // Ensure long words wrap properly
+                                wordBreak: 'break-word',
                             }}
                         >
                             {renderMessageText(message.text)}
