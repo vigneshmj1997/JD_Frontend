@@ -125,7 +125,7 @@ const ChatPage = () => {
             let response, data;
 
             if (text.toLowerCase() === "restart") {
-                response = await fetch('https://135.236.16.196:8000/jd/initialize', {
+                response = await fetch('http://127.0.0.1:8000/jd/initialize', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -154,7 +154,7 @@ const ChatPage = () => {
                     return;
                 }
 
-                response = await fetch('https://135.236.16.196:8000/jd/initialize', {
+                response = await fetch('http://127.0.0.1:8000/jd/initialize', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -175,7 +175,7 @@ const ChatPage = () => {
                 };
                 setMessages((prevMessages) => [...prevMessages, botMessage]);
             } else {
-                response = await fetch('https://135.236.16.196:8000/jd/message', {
+                response = await fetch('http://127.0.0.1:8000/jd/message', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
