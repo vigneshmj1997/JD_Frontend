@@ -125,7 +125,7 @@ const ChatPage = () => {
             let response, data;
 
             if (text.toLowerCase() === "restart") {
-                response = await fetch('https://deeble-jdassistant.com/api/jd/initialize', {
+                response = await fetch('https://deeble-jdassistant.com/jd/initialize', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -134,7 +134,7 @@ const ChatPage = () => {
                 });
 
                 data = await response.json();
-
+                console.log(data)
                 if (data.thread_id) {
                     setThreadId(data.thread_id);
                 }
@@ -154,7 +154,7 @@ const ChatPage = () => {
                     return;
                 }
 
-                response = await fetch('https://deeble-jdassistant.com/api/jd/initialize', {
+                response = await fetch('https://deeble-jdassistant.com/jd/initialize', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -175,7 +175,7 @@ const ChatPage = () => {
                 };
                 setMessages((prevMessages) => [...prevMessages, botMessage]);
             } else {
-                response = await fetch('https://deeble-jdassistant.com/api/jd/message', {
+                response = await fetch('https://deeble-jdassistant.com/jd/message', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
