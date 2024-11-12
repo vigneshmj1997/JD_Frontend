@@ -17,10 +17,20 @@ const ChatWindow = ({ messages, style }) => {
     }, [messages]);
 
     const renderMessageText = (text) => {
-        return text.replace(/\\u[\dA-Fa-f]{4}/g, (match) => {
-            return String.fromCodePoint(parseInt(match.replace(/\\u/g, ''), 16));
+        return text.replace(/\\u([\dA-Fa-f]{4})\\u([\dA-Fa-f]{4})|\\u([\dA-Fa-f]{4})/g, (match, high, low, single) => {
+            if (high && low) {
+                // This is a surrogate pair
+                const highSurrogate = parseInt(high, 16);
+                const lowSurrogate = parseInt(low, 16);
+                const codePoint = ((highSurrogate - 0xD800) * 0x400) + (lowSurrogate - 0xDC00) + 0x10000;
+                return String.fromCodePoint(codePoint);
+            } else if (single) {
+                // This is a single Unicode character
+                return String.fromCodePoint(parseInt(single, 16));
+            }
         });
     };
+    
 
     const formatTime = (timestamp) => {
         const date = new Date(timestamp);
