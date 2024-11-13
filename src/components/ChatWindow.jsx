@@ -17,20 +17,26 @@ const ChatWindow = ({ messages, style }) => {
     }, [messages]);
 
     const renderMessageText = (text) => {
-        return text.replace(/\\u([\dA-Fa-f]{4})|\\u([\dA-Fa-f]{4})\\u([\dA-Fa-f]{4})/g, (match, single, high, low) => {
+        // Replace segments like "\nd83d\ndc68\ndd3e\ndd1d" with a single, correctly formatted string
+        const formattedText = text.replace(/\\n?([dD][\da-fA-F]{3})\\n?([dD][\da-fA-F]{3})\\n?([dD][\da-fA-F]{3})\\n?([dD][\da-fA-F]{3})/g, 
+            (match, p1, p2, p3, p4) => `\\u${p1}\\u${p2}\\u${p3}\\u${p4}`);
+    
+        // Process Unicode escape sequences as characters
+        return formattedText.replace(/\\u([\dA-Fa-f]{4})\\u([\dA-Fa-f]{4})|\\u([\dA-Fa-f]{4})/g, (match, high, low, single) => {
             if (high && low) {
-                // Handle surrogate pair
+                // Surrogate pair
                 const highSurrogate = parseInt(high, 16);
                 const lowSurrogate = parseInt(low, 16);
                 const codePoint = ((highSurrogate - 0xD800) * 0x400) + (lowSurrogate - 0xDC00) + 0x10000;
                 return String.fromCodePoint(codePoint);
             } else if (single) {
-                // Handle single Unicode character
+                // Single Unicode character
                 return String.fromCodePoint(parseInt(single, 16));
             }
-            return match; // Return the original match if nothing matched
+            return match;
         });
     };
+    
     
 
     const formatTime = (timestamp) => {
