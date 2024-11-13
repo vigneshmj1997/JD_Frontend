@@ -224,7 +224,7 @@ const ChatPage = () => {
             "SEO (Search Engine Optimization)",
             "Social Media Management",
             "Software Testing"
-        ]
+        ],
         
         job_industry: [
             "Technology", "Healthcare", "Finance", "Education", 
