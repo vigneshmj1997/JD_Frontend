@@ -194,7 +194,7 @@ const ChatPage = () => {
                     setSuggestions(newSuggestions);
                 }
 
-                const regex = /([\s\S]*?)/;
+                const regex = /```([\s\S]*?)```/;
                 const match = data.message.message_content.match(regex);
 
                 if (match) {
@@ -323,7 +323,6 @@ const ChatPage = () => {
                 left="0"
                 width="100%"
                 bgcolor={darkMode ? '#333' : '#ffffff'}
-                p={2}
                 display="flex"
                 justifyContent="center"
                 boxShadow="0 -2px 5px rgba(0,0,0,0.1)"
