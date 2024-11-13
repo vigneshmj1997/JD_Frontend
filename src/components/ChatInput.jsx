@@ -10,25 +10,28 @@ const ChatInput = ({ onSendMessage, suggestions = [] }) => {
     const handleInputChange = (event) => {
         const value = event.target.value;
         setInputValue(value);
-
+    
         const words = value.trim().split(/\s+/);
         const lastWord = words[words.length - 1];
-
+    
         if (lastWord.length >= 2) {
             const filtered = suggestions
                 .map(group => ({
                     category: group.category || 'Unknown Category',
-                    suggestions: (group.suggestions || []).filter(suggestion =>
-                        suggestion.toLowerCase().startsWith(lastWord.toLowerCase())
-                    )
+                    suggestions: (group.suggestions || [])
+                        .filter(suggestion =>
+                            suggestion.toLowerCase().startsWith(lastWord.toLowerCase())
+                        )
+                        .slice(0, 5) // Limit each group to top 5 suggestions
                 }))
                 .filter(group => group.suggestions.length > 0);
-
+    
             setFilteredSuggestions(filtered);
         } else {
             setFilteredSuggestions([]);
         }
     };
+    
 
     const handleSubmit = (event) => {
         event.preventDefault();
