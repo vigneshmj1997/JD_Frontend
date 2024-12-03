@@ -324,12 +324,25 @@ const ChatPage = () => {
         try {
             let response, data;
             if (text.toLowerCase() === "restart") {
+
+                const requestData = {
+                    jd: null, // Replace "string" with the actual job description value
+                    language: isArabic ? "arabic" : "english",
+                    user_info: {
+                        user_name: "Vignesh", // Replace "string" with the actual user name
+                        company_name: "Nautilus Principle", // Replace with the company name
+                        company_address: "7th Floor, Burj Al Gassar Tower, Westbay, Doha,", // Replace with the company address
+                        company_phone: "1234567", // Replace with the company phone
+                        company_website: "https://www.nautilusprinciple.com", // Replace with the company website
+                        company_email: "info@nautilusprinciple.com", // Replace with the company email
+                    }
+                };
                 response = await fetch('https://deeble-jdassistant.com/jd/initialize', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ jd: null ,language: isArabic ? "arabic" : "english"}),
+                    body: JSON.stringify(requestData),
                 });
 
                 data = await response.json();
